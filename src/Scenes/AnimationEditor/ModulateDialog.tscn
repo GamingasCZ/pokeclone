@@ -1,0 +1,125 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/AnimationEditor/AnimationParent.gd" type="Script" id=1]
+
+[sub_resource type="ButtonGroup" id=1]
+
+[node name="ModulateDialog" type="PopupDialog"]
+anchor_right = 0.2
+anchor_bottom = 0.178
+margin_left = 1016.0
+margin_top = 8.0
+margin_right = 1016.0
+margin_bottom = 169.84
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 10
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_right = 256.0
+margin_bottom = 14.0
+text = "Modulate"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 256.0
+margin_bottom = 48.0
+alignment = 1
+
+[node name="Camera" type="CheckBox" parent="VBoxContainer/HBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 17.0
+margin_right = 93.0
+margin_bottom = 24.0
+group = SubResource( 1 )
+text = "Camera"
+
+[node name="Player" type="CheckBox" parent="VBoxContainer/HBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 97.0
+margin_right = 164.0
+margin_bottom = 24.0
+pressed = true
+group = SubResource( 1 )
+text = "Player"
+
+[node name="Enemy" type="CheckBox" parent="VBoxContainer/HBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 168.0
+margin_right = 239.0
+margin_bottom = 24.0
+group = SubResource( 1 )
+text = "Enemy"
+
+[node name="FadeIn" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_top = 58.0
+margin_right = 256.0
+margin_bottom = 82.0
+max_value = 5.0
+step = 0.01
+prefix = "Fade in:"
+suffix = "s"
+
+[node name="Duration" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_top = 92.0
+margin_right = 256.0
+margin_bottom = 116.0
+min_value = 0.1
+max_value = 5.0
+step = 0.1
+value = 0.1
+prefix = "Duration:"
+suffix = "s"
+
+[node name="FadeOut" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_top = 126.0
+margin_right = 256.0
+margin_bottom = 150.0
+max_value = 5.0
+step = 0.01
+prefix = "Fade out:"
+suffix = "s"
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+margin_top = 160.0
+margin_right = 256.0
+margin_bottom = 180.0
+columns = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
+margin_top = 3.0
+margin_right = 41.0
+margin_bottom = 17.0
+text = "Color: "
+
+[node name="SetCol" type="ColorPickerButton" parent="VBoxContainer/GridContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 45.0
+margin_right = 151.0
+margin_bottom = 20.0
+mouse_filter = 2
+size_flags_horizontal = 11
+align = 2
+color = Color( 0.501961, 0.501961, 0.501961, 1 )
+
+[node name="Delete" type="Button" parent="VBoxContainer"]
+margin_top = 190.0
+margin_right = 256.0
+margin_bottom = 210.0
+text = "Delete"
+
+[node name="Confirm" type="Button" parent="VBoxContainer"]
+margin_top = 220.0
+margin_right = 256.0
+margin_bottom = 240.0
+text = "Confirm"

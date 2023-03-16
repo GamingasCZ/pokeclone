@@ -1,0 +1,6 @@
+[
+    {"name": "Tackle", "power": 40, "accuracy": 100, "type":[1], "pp": 30},
+    {"name": "Fire Fart", "power": 40, "accuracy": 100, "type":[10], "pp": 30},
+    {"name": "Piss", "power": 40, "accuracy": 100, "type":[11], "pp": 30},
+    {"name": "Salad", "power": 40, "accuracy": 100, "type":[12], "pp": 30}
+]

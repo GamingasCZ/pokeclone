@@ -1,0 +1,195 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/AnimationEditor/AnimationParent.gd" type="Script" id=1]
+
+[sub_resource type="ButtonGroup" id=1]
+
+[sub_resource type="GDScript" id=2]
+resource_name = "getMousePos"
+script/source = "extends Button
+
+func _ready():
+	connect(\"pressed\", self, \"startCapture\")
+	set_process_input(false)
+	
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == BUTTON_LEFT:
+			Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+			set_process_input(false)
+			
+	if event is InputEventMouseMotion:
+		get_parent().get_node(\"XPosOffset\").value = get_viewport().get_mouse_position().x
+		get_parent().get_node(\"YPosOffset\").value = get_viewport().get_mouse_position().y
+	
+func startCapture():
+	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
+	set_process_input(true)
+"
+
+[node name="TransformDialog" type="PopupDialog"]
+anchor_right = 0.2
+anchor_bottom = 0.178
+margin_left = 1016.0
+margin_top = 8.0
+margin_right = 1016.0
+margin_bottom = 235.84
+mouse_filter = 2
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 10
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_right = 256.0
+margin_bottom = 14.0
+text = "Transform"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 256.0
+margin_bottom = 48.0
+alignment = 1
+
+[node name="Player" type="CheckBox" parent="VBoxContainer/HBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 57.0
+margin_right = 124.0
+margin_bottom = 24.0
+pressed = true
+group = SubResource( 1 )
+text = "Player"
+
+[node name="Enemy" type="CheckBox" parent="VBoxContainer/HBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 128.0
+margin_right = 199.0
+margin_bottom = 24.0
+group = SubResource( 1 )
+text = "Enemy"
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_top = 58.0
+margin_right = 256.0
+margin_bottom = 72.0
+text = "Position Offset"
+align = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 82.0
+margin_right = 256.0
+margin_bottom = 106.0
+alignment = 1
+
+[node name="XPosOffset" type="SpinBox" parent="VBoxContainer/HBoxContainer2" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_right = 106.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1500.0
+prefix = "X: "
+
+[node name="YPosOffset" type="SpinBox" parent="VBoxContainer/HBoxContainer2" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 110.0
+margin_right = 217.0
+margin_bottom = 24.0
+mouse_filter = 2
+size_flags_horizontal = 3
+min_value = -512.0
+max_value = 1500.0
+prefix = "Y: "
+
+[node name="getMousePos" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 221.0
+margin_right = 256.0
+margin_bottom = 24.0
+text = "Get"
+script = SubResource( 2 )
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+margin_top = 116.0
+margin_right = 256.0
+margin_bottom = 130.0
+text = "Scale"
+align = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 140.0
+margin_right = 256.0
+margin_bottom = 164.0
+alignment = 1
+
+[node name="XScaleOffset" type="SpinBox" parent="VBoxContainer/HBoxContainer3" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_right = 126.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -10.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+prefix = "Width: "
+
+[node name="YScaleOffset" type="SpinBox" parent="VBoxContainer/HBoxContainer3" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 130.0
+margin_right = 256.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -10.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+prefix = "Height: "
+
+[node name="Rotation" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_top = 174.0
+margin_right = 256.0
+margin_bottom = 198.0
+size_flags_horizontal = 3
+min_value = -512.0
+max_value = 512.0
+prefix = "Rotation: "
+suffix = "deg"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 208.0
+margin_right = 256.0
+margin_bottom = 212.0
+
+[node name="Duration" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_top = 222.0
+margin_right = 256.0
+margin_bottom = 246.0
+min_value = 0.01
+max_value = 10.0
+step = 0.01
+value = 1.0
+prefix = "Duration:"
+suffix = "s"
+
+[node name="Reverse" type="CheckBox" parent="VBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_top = 256.0
+margin_right = 256.0
+margin_bottom = 280.0
+text = "Do reverse"
+
+[node name="Delete" type="Button" parent="VBoxContainer"]
+margin_top = 290.0
+margin_right = 256.0
+margin_bottom = 310.0
+text = "Delete"
+
+[node name="Confirm" type="Button" parent="VBoxContainer"]
+margin_top = 320.0
+margin_right = 256.0
+margin_bottom = 340.0
+text = "Confirm"

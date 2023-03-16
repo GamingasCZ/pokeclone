@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Images/joystick.png" type="Texture" id=1]
+
+[node name="MobileController" type="Node2D"]
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2( 30, 81 )
+rotation = 3.14159
+normal = ExtResource( 1 )
+action = "ui_down"
+
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="."]
+position = Vector2( -82, 28 )
+rotation = -1.5708
+normal = ExtResource( 1 )
+action = "ui_left"
+
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="."]
+position = Vector2( 86, -28 )
+rotation = 1.5708
+normal = ExtResource( 1 )
+action = "ui_right"
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="."]
+position = Vector2( -29, -78 )
+normal = ExtResource( 1 )
+action = "ui_up"

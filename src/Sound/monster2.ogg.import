@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/monster2.ogg-8ded807cf4f158e7bc7bdca0d5b8d5e9.oggstr"
+
+[deps]
+
+source_file="res://Sound/monster2.ogg"
+dest_files=[ "res://.import/monster2.ogg-8ded807cf4f158e7bc7bdca0d5b8d5e9.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
