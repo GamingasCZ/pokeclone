@@ -9,11 +9,13 @@ func loadFromDict(popupToModify : PopupDialog, dict : Dictionary):
 		var val = dict.controls[key]
 
 		var setting = popupToModify.get_node_or_null("%"+key)
-		if setting == null: push_error("Setting not valid for this type!")
+		if setting == null: push_error("Setting not valid for this type! (%s, %s)" % [key, val])
 		
 		if setting is SpinBox: setting.value = val
 		elif setting is CheckBox: setting.pressed = val
 		elif setting is ColorPickerButton: setting.color = Color(val)
+		elif setting is MenuButton: setting.get_popup().set_current_index(val)
+		
 			
 func createSettingDict(name) -> Dictionary:
 	# Make sure only one popup is on the screen!
@@ -26,6 +28,7 @@ func createSettingDict(name) -> Dictionary:
 		if control is SpinBox: settingDict.controls[control.name] = control.value
 		elif control is CheckBox: settingDict.controls[control.name] = control.pressed
 		elif control is ColorPickerButton: settingDict.controls[control.name] = control.color
+		elif control is MenuButton: settingDict.controls[control.name] = 0
 	
 	return settingDict
 
@@ -54,6 +57,7 @@ func createPopup(popup : String, editing : bool = false, index : int = 0) -> Pop
 		if control is SpinBox: control.connect("value_changed", self, "modifyPopupVal", [control.name, settings["id"]])
 		elif control is CheckBox: control.connect("toggled", self, "modifyPopupVal", [control.name, settings["id"]])
 		elif control is ColorPickerButton: control.connect("color_changed", self, "modifyPopupVal", [control.name, settings["id"]])
+		elif control is MenuButton: control.get_popup().connect("id_pressed", self, "modifyPopupVal", [control.name, settings["id"]])
 		
 	popupInstance.popup()
 	return popupInstance

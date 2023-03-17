@@ -2,6 +2,7 @@ extends Node2D
 
 var pokemon : Node
 var backside : bool
+var breathingShader : ShaderMaterial
 
 const scaleAm = 1.5
 
@@ -18,10 +19,12 @@ func _ready() -> void:
 		pokeSprite.material.set_shader_param("offset", breathe_offset)
 		pokeSprite.material.set_shader_param("stretch_factor", 30.0)
 		
+		
 		pokeSprite.offset.y = -128
 		pokeSprite.z_index = 2+int(backside)
 		pokeSprite.scale = Vector2(1.0+float(backside)/scaleAm, 1.0+float(backside)/scaleAm)
 		if i == 1:
+			breathingShader = pokeSprite.get_material()
 			pokeSprite.z_index = 1+int(backside)
 			pokeSprite.position = Vector2(-40, -40)
 			pokeSprite.rotation_degrees = 90
@@ -30,16 +33,6 @@ func _ready() -> void:
 			
 		
 		add_child(pokeSprite)
-
-func hurtFlash() -> void:
-	$Hit.play()
-	for _i in range(2):
-		$Hurt.interpolate_property(self, "modulate", null, Color.transparent, 0.05)
-		$Hurt.start()
-		yield($Hurt, "tween_completed")
-		$Hurt.interpolate_property(self, "modulate", null, Color.white, 0.05)
-		$Hurt.start()
-		yield($Hurt, "tween_completed")
 
 func defeatAnimation() -> void:
 	$Hurt.interpolate_property(self, "position", null, position+Vector2(0, 64), 0.2)

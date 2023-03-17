@@ -48,7 +48,11 @@ func doAttack(attack : Node, enemy : bool) -> void:
 	# maybe add items
 	var formula = (((2*attacker.level/5+2)*attack.power*attacker.attack/defender.defense)/50*CRIT+2)*STAB*EFFECTIVENESS
 	if !MISS:
-		battleSprites[int(enemy)].hurtFlash()
+		var file = File.new()
+		if file.file_exists("res://Data/CustomAnimations/%s%s.dat" % [attack.name, "Back" if enemy else "Front"]):
+			file.open("res://Data/CustomAnimations/%s%s.dat" % [attack.name, "Back" if enemy else "Front"], File.READ)
+			$AnimationDrawer.playAttacks(battleSprites, file.get_var())
+			yield($AnimationDrawer, "attack_finished")
 		modifyHP(defender, !enemy, -formula)
 		yield(self, "hpBarModified")
 	

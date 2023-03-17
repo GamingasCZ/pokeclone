@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/1_back.png-68041133fb523ed7354bc80884e9a588.stex"
+path="res://.import/1.png-ad6c2686ddc3dc4282c996e95b55eed2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/pokemon/1_back.png"
-dest_files=[ "res://.import/1_back.png-68041133fb523ed7354bc80884e9a588.stex" ]
+source_file="res://Images/particles/1.png"
+dest_files=[ "res://.import/1.png-ad6c2686ddc3dc4282c996e95b55eed2.stex" ]
 
 [params]
 

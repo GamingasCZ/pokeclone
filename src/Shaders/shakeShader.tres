@@ -1,0 +1,73 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+// Shake
+uniform float intensity = 0.0;
+uniform float speed = 50.0;
+uniform bool allowY;
+
+// Modulation
+uniform vec4 modulate : hint_color = vec4(0.501961, 0.501961, 0.501961, 1.000000);
+
+void vertex() {
+	VERTEX.x += sin(TIME*speed)*intensity;
+	if (allowY) VERTEX.y += cos(TIME*speed)*intensity;
+}
+
+void fragment() {
+// ColorUniform:6
+	vec3 n_out6p0 = modulate.rgb;
+	float n_out6p1 = modulate.a;
+
+// Texture:3
+	vec3 n_out3p0;
+	float n_out3p1;
+	{
+		vec4 _tex_read = texture(TEXTURE , UV.xy);
+		n_out3p0 = _tex_read.rgb;
+		n_out3p1 = _tex_read.a;
+	}
+
+// ColorOp:7
+	vec3 n_out7p0;
+	{
+		float base = n_out6p0.x;
+		float blend = n_out3p0.x;
+		if (base < 0.5) {
+			n_out7p0.x = 2.0 * base * blend;
+		} else {
+			n_out7p0.x = 1.0 - 2.0 * (1.0 - blend) * (1.0 - base);
+		}
+	}
+	{
+		float base = n_out6p0.y;
+		float blend = n_out3p0.y;
+		if (base < 0.5) {
+			n_out7p0.y = 2.0 * base * blend;
+		} else {
+			n_out7p0.y = 1.0 - 2.0 * (1.0 - blend) * (1.0 - base);
+		}
+	}
+	{
+		float base = n_out6p0.z;
+		float blend = n_out3p0.z;
+		if (base < 0.5) {
+			n_out7p0.z = 2.0 * base * blend;
+		} else {
+			n_out7p0.z = 1.0 - 2.0 * (1.0 - blend) * (1.0 - base);
+		}
+	}
+
+	COLOR.rgb = n_out7p0;
+	COLOR.a = n_out3p1;
+}
+"
+
+[resource]
+shader = SubResource( 2 )
+shader_param/intensity = 0.0
+shader_param/speed = 50.0
+shader_param/allowY = false
+shader_param/modulate = Color( 0.501961, 0.501961, 0.501961, 1 )

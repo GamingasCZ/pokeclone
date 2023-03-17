@@ -5,12 +5,13 @@
 [sub_resource type="ButtonGroup" id=1]
 
 [node name="ModulateDialog" type="PopupDialog"]
+visible = true
 anchor_right = 0.2
 anchor_bottom = 0.178
 margin_left = 1016.0
 margin_top = 8.0
 margin_right = 1016.0
-margin_bottom = 169.84
+margin_bottom = 132.84
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -107,7 +108,7 @@ unique_name_in_owner = true
 margin_left = 45.0
 margin_right = 151.0
 margin_bottom = 20.0
-mouse_filter = 2
+mouse_filter = 1
 size_flags_horizontal = 11
 align = 2
 color = Color( 0.501961, 0.501961, 0.501961, 1 )

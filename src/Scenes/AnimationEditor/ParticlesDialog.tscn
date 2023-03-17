@@ -1,6 +1,31 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/AnimationEditor/AnimationParent.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=2]
+resource_name = "getMousePos"
+script/source = "extends Button
+
+func _ready():
+	connect(\"pressed\", self, \"startCapture\")
+	set_process_input(false)
+	
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == BUTTON_LEFT:
+			Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+			set_process_input(false)
+			
+	if event is InputEventMouseMotion:
+		get_parent().get_node(\"XPosOffset\").value = get_viewport().get_mouse_position().x
+		get_parent().get_node(\"YPosOffset\").value = get_viewport().get_mouse_position().y
+	
+func startCapture():
+	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
+	set_process_input(true)
+"
+
+[sub_resource type="ButtonGroup" id=3]
 
 [sub_resource type="ButtonGroup" id=1]
 
@@ -10,134 +35,166 @@ anchor_bottom = 0.178
 margin_left = 1016.0
 margin_top = 8.0
 margin_right = 1016.0
-margin_bottom = 441.84
+margin_bottom = 375.84
 script = ExtResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 4.0
 custom_constants/separation = 10
 
 [node name="Title" type="Label" parent="VBoxContainer"]
-margin_right = 256.0
+margin_right = 260.0
 margin_bottom = 14.0
 text = "Particles"
 align = 1
 
-[node name="Label5" type="Label" parent="VBoxContainer"]
-margin_top = 24.0
-margin_right = 256.0
-margin_bottom = 38.0
-text = "Position"
-align = 1
-
 [node name="GridContainer5" type="GridContainer" parent="VBoxContainer"]
-margin_top = 48.0
-margin_right = 256.0
-margin_bottom = 100.0
-columns = 4
+margin_top = 24.0
+margin_right = 260.0
+margin_bottom = 76.0
+columns = 3
 
-[node name="YPos" type="SpinBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
+[node name="YPosOffset" type="SpinBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_right = 74.0
+margin_right = 109.0
 margin_bottom = 24.0
-max_value = 1024.0
+min_value = -500.0
+max_value = 1500.0
 prefix = "X:"
 
-[node name="XPos" type="SpinBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
+[node name="XPosOffset" type="SpinBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_left = 78.0
-margin_right = 169.0
+margin_left = 113.0
+margin_right = 221.0
 margin_bottom = 24.0
-max_value = 600.0
+min_value = -500.0
+max_value = 1500.0
 prefix = "Y:"
 
-[node name="PMP" type="Button" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
-unique_name_in_owner = true
-margin_left = 173.0
-margin_right = 213.0
+[node name="getMousePos" type="Button" parent="VBoxContainer/GridContainer5"]
+margin_left = 225.0
+margin_right = 260.0
 margin_bottom = 24.0
-hint_tooltip = "Player Mouth Position"
-size_flags_horizontal = 3
-text = "PMP"
+text = "Get"
+script = SubResource( 2 )
 
-[node name="EMP" type="Button" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
-unique_name_in_owner = true
-margin_left = 217.0
-margin_right = 256.0
-margin_bottom = 24.0
-hint_tooltip = "Enemy Mouth Position"
-size_flags_horizontal = 3
-text = "EMP"
-
-[node name="Behind" type="CheckBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
+[node name="PMP" type="CheckBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
 unique_name_in_owner = true
 margin_top = 28.0
-margin_right = 74.0
+margin_right = 109.0
 margin_bottom = 52.0
+group = SubResource( 3 )
+text = "P mouth pos"
+
+[node name="EMP" type="CheckBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 113.0
+margin_top = 28.0
+margin_right = 221.0
+margin_bottom = 52.0
+group = SubResource( 3 )
+text = "E mouth pos"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 86.0
+margin_right = 260.0
+margin_bottom = 110.0
+alignment = 1
+
+[node name="Behind" type="CheckBox" parent="VBoxContainer/HBoxContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 46.0
+margin_right = 119.0
+margin_bottom = 24.0
 pressed = true
 group = SubResource( 1 )
 text = "Behind"
 
-[node name="InFrontOf" type="CheckBox" parent="VBoxContainer/GridContainer5" groups=["modifiables"]]
+[node name="InFrontOf" type="CheckBox" parent="VBoxContainer/HBoxContainer" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_left = 78.0
-margin_top = 28.0
-margin_right = 169.0
-margin_bottom = 52.0
+margin_left = 123.0
+margin_right = 214.0
+margin_bottom = 24.0
 group = SubResource( 1 )
 text = "In front of"
 
-[node name="Angle" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 120.0
+margin_right = 260.0
+margin_bottom = 144.0
+alignment = 1
+
+[node name="Angle" type="SpinBox" parent="VBoxContainer/HBoxContainer2" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_top = 110.0
-margin_right = 256.0
-margin_bottom = 134.0
+margin_right = 128.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
 max_value = 360.0
 prefix = "Angle:"
 
-[node name="Spread" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+[node name="Spread" type="SpinBox" parent="VBoxContainer/HBoxContainer2" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_top = 144.0
-margin_right = 256.0
-margin_bottom = 168.0
+margin_left = 132.0
+margin_right = 260.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
 max_value = 360.0
+value = 45.0
 prefix = "Spread:"
 
-[node name="Count" type="SpinBox" parent="VBoxContainer" groups=["modifiables"]]
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 154.0
+margin_right = 260.0
+margin_bottom = 178.0
+
+[node name="Count" type="SpinBox" parent="VBoxContainer/HBoxContainer3" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_top = 178.0
-margin_right = 256.0
-margin_bottom = 202.0
+margin_right = 128.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
 max_value = 50.0
-prefix = "Particle Count:"
+value = 20.0
+prefix = "Particles:"
+
+[node name="Speed" type="SpinBox" parent="VBoxContainer/HBoxContainer3" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 132.0
+margin_right = 260.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 1500.0
+value = 90.0
+prefix = "Speed:"
 
 [node name="Shape" type="MenuButton" parent="VBoxContainer" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_top = 212.0
-margin_right = 256.0
-margin_bottom = 232.0
+margin_top = 188.0
+margin_right = 260.0
+margin_bottom = 208.0
 focus_mode = 2
 text = "Shape"
 flat = false
-items = [ "Glow", null, 2, false, false, 0, 0, null, "", false, "Water Drop", null, 2, false, false, 1, 0, null, "", false, "Poison Ball", null, 2, false, false, 2, 0, null, "", false, "Leaf", null, 2, false, false, 3, 0, null, "", false ]
+items = [ "Glow", null, 2, true, false, 0, 0, null, "", false, "Water Drop", null, 2, false, false, 1, 0, null, "", false, "Poison Ball", null, 2, false, false, 2, 0, null, "", false, "Leaf", null, 2, false, false, 3, 0, null, "", false, "Block", null, 2, false, false, 4, 0, null, "", false ]
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 242.0
-margin_right = 256.0
-margin_bottom = 246.0
+margin_top = 218.0
+margin_right = 260.0
+margin_bottom = 222.0
 
 [node name="Label4" type="Label" parent="VBoxContainer"]
-margin_top = 256.0
-margin_right = 256.0
-margin_bottom = 270.0
+margin_top = 232.0
+margin_right = 260.0
+margin_bottom = 246.0
 text = "Lifetime / Fade In Out"
 align = 1
 
 [node name="GridContainer3" type="GridContainer" parent="VBoxContainer"]
-margin_top = 280.0
-margin_right = 256.0
-margin_bottom = 304.0
+margin_top = 256.0
+margin_right = 260.0
+margin_bottom = 280.0
 columns = 3
 
 [node name="InTime" type="SpinBox" parent="VBoxContainer/GridContainer3" groups=["modifiables"]]
@@ -152,20 +209,20 @@ suffix = "s"
 [node name="Duration" type="SpinBox" parent="VBoxContainer/GridContainer3" groups=["modifiables"]]
 unique_name_in_owner = true
 margin_left = 78.0
-margin_right = 178.0
+margin_right = 182.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = 0.01
 max_value = 5.0
 step = 0.01
-value = 0.01
+value = 0.5
 prefix = "Life:"
 suffix = "s"
 
 [node name="OutTime" type="SpinBox" parent="VBoxContainer/GridContainer3" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_left = 182.0
-margin_right = 256.0
+margin_left = 186.0
+margin_right = 260.0
 margin_bottom = 24.0
 max_value = 5.0
 step = 0.01
@@ -173,16 +230,17 @@ prefix = "O:"
 suffix = "s"
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
-margin_top = 314.0
-margin_right = 256.0
-margin_bottom = 328.0
-text = "Particle Color"
+margin_top = 290.0
+margin_right = 260.0
+margin_bottom = 304.0
+text = "Particle Color and Scale"
 align = 1
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
-margin_top = 338.0
-margin_right = 256.0
-margin_bottom = 362.0
+margin_top = 314.0
+margin_right = 260.0
+margin_bottom = 338.0
+custom_constants/hseparation = 37
 columns = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
@@ -191,25 +249,29 @@ margin_right = 41.0
 margin_bottom = 19.0
 text = "From: "
 
-[node name="FromCurrentCol" type="CheckBox" parent="VBoxContainer/GridContainer" groups=["modifiables"]]
-unique_name_in_owner = true
-margin_left = 45.0
-margin_right = 156.0
-margin_bottom = 24.0
-text = "Current         "
-
 [node name="FromCol" type="ColorPickerButton" parent="VBoxContainer/GridContainer" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_left = 160.0
-margin_right = 256.0
+margin_left = 78.0
+margin_right = 149.0
 margin_bottom = 24.0
 size_flags_horizontal = 11
 align = 2
 
+[node name="FromScale" type="SpinBox" parent="VBoxContainer/GridContainer" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 186.0
+margin_right = 260.0
+margin_bottom = 24.0
+min_value = 0.1
+max_value = 50.0
+step = 0.01
+value = 5.0
+
 [node name="GridContainer2" type="GridContainer" parent="VBoxContainer"]
-margin_top = 372.0
-margin_right = 256.0
-margin_bottom = 396.0
+margin_top = 348.0
+margin_right = 260.0
+margin_bottom = 372.0
+custom_constants/hseparation = 36
 columns = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/GridContainer2"]
@@ -218,67 +280,44 @@ margin_right = 43.0
 margin_bottom = 19.0
 text = "To:      "
 
-[node name="ToCurrentCol" type="CheckBox" parent="VBoxContainer/GridContainer2" groups=["modifiables"]]
-unique_name_in_owner = true
-margin_left = 47.0
-margin_right = 158.0
-margin_bottom = 24.0
-text = "Current         "
-
 [node name="ToCol" type="ColorPickerButton" parent="VBoxContainer/GridContainer2" groups=["modifiables"]]
 unique_name_in_owner = true
-margin_left = 162.0
-margin_right = 256.0
+margin_left = 79.0
+margin_right = 150.0
 margin_bottom = 24.0
 size_flags_horizontal = 11
 align = 2
 
-[node name="Label3" type="Label" parent="VBoxContainer"]
-margin_top = 406.0
-margin_right = 256.0
-margin_bottom = 420.0
-text = "Scale"
-align = 1
+[node name="ToScale" type="SpinBox" parent="VBoxContainer/GridContainer2" groups=["modifiables"]]
+unique_name_in_owner = true
+margin_left = 186.0
+margin_right = 260.0
+margin_bottom = 24.0
+min_value = 0.1
+max_value = 50.0
+step = 0.01
+value = 5.0
 
 [node name="GridContainer4" type="GridContainer" parent="VBoxContainer"]
-margin_top = 430.0
-margin_right = 256.0
-margin_bottom = 454.0
+margin_top = 382.0
+margin_right = 260.0
+margin_bottom = 382.0
 columns = 2
 
-[node name="FromScale" type="SpinBox" parent="VBoxContainer/GridContainer4" groups=["modifiables"]]
-unique_name_in_owner = true
-margin_right = 126.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-max_value = 5.0
-step = 0.01
-prefix = "From:"
-
-[node name="ToScale" type="SpinBox" parent="VBoxContainer/GridContainer4" groups=["modifiables"]]
-unique_name_in_owner = true
-margin_left = 130.0
-margin_right = 256.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-max_value = 5.0
-step = 0.01
-prefix = "To:"
-
 [node name="Preview" type="CheckBox" parent="VBoxContainer"]
-margin_top = 464.0
-margin_right = 256.0
-margin_bottom = 488.0
+margin_top = 392.0
+margin_right = 260.0
+margin_bottom = 416.0
 text = "Preview"
 
 [node name="Delete" type="Button" parent="VBoxContainer"]
-margin_top = 498.0
-margin_right = 256.0
-margin_bottom = 518.0
+margin_top = 426.0
+margin_right = 260.0
+margin_bottom = 446.0
 text = "Delete"
 
 [node name="Confirm" type="Button" parent="VBoxContainer"]
-margin_top = 528.0
-margin_right = 256.0
-margin_bottom = 548.0
+margin_top = 456.0
+margin_right = 260.0
+margin_bottom = 476.0
 text = "Confirm"
