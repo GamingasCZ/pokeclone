@@ -97,3 +97,9 @@ autoplay = true
 
 [node name="MobileController" parent="." instance=ExtResource( 6 )]
 position = Vector2( 152, 608 )
+
+[node name="AnimEditor" type="Button" parent="."]
+margin_left = 1102.0
+margin_right = 1279.0
+margin_bottom = 65.0
+text = "Animation editor"
